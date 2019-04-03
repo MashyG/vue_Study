@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>指令</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <script>
+        /*  指令：当其表达式的只改变时，相应地将某些行为应用到DOM上。  带有前缀 v-
+        *   v-html  元素innerHTML                            简写为 {{}}
+        *   v-text  元素的InnerText属性，必须双标签
+        *   v-if    判断是否插入该元素
+        *   v-else-if
+        *   v-else
+        *   v-show  控制显隐，通过js代码去修改元素的element style，
+        *           如果value为false，设置display: none;
+        *           如果value为true，设置display: ''
+        * * v-bind  动态更新HTML元素上的属性，比如id、class   简写为 :   （语法糖）
+        * * v-on    用于绑定事件监听器，用做一些交互          简写为 @   （语法糖）
+        *   v-cloak 不需要表达式，在Vue实例结束编译时从绑定的HTML元素上移除，经常和CSS的display:none配合使用
+        *           解决初始化慢而导致页面闪动的最佳实践
+        *   v-once  不需要表达式，作用是定义它的元素或组件只渲染一次，包括元素或组件的所有子节点
+        *           首次渲染后，不再随数据的变化重新渲染，将被视为静态内容
+        *           在业务中很少使用，当需要优化性能时，可能会用到
+        *   v-for   列表渲染指令，将一个数组遍历或枚举一个对象循环显示，并且需要结合 in(或of)来使用
+        */
+    </script>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="app" v-cloak>
+        {{ massage }}
+        <br/>
+        <span v-html="link"></span>
+        <br/>
+        <span v-text="link"></span>
+        <br/>
+        <span v-if="show"><code>v-if</code>为true，显示文本</span>
+        <!--<span v-else-if="!show"><code>v-if</code>为false，显示文本</span>-->
+        <!--<span v-else><code>v-if</code>为false，显示文本</span>-->
+        <br/>
+        <!--<input type="button" class="btn btn-success" value="点击隐藏上面的文本" v-on:click="handleClose" />-->
+        <input type="button" class="btn btn-success" value="点击隐藏上面的文本" @click="handleClose()" />
+        <br/>
+        <!--<a v-bind:href="url">链接</a>-->
+        <a :href="url">链接</a>
+        <br/>
+        <span v-once>{{ massage }}</span>
+        <br/>
+        <div v-once>
+            <span>{{ massage }}</span>
+        </div>
+        <br/>
+        <ul>
+            <li v-for="(book, index) of books">{{ index }} - {{ book.name }}</li>
+        </ul>
+        <br/>
+        <span v-for="n in 10">{{ n }}</span>
+    </div>
+</div>
+<script src="../js/vue.js"></script>
+<script>
+    let app = new Vue({
+        el : '#app',
+        data : {
+            massage : '这是一段文本',
+            link : "<a href='#'>这是一个包含在span中的a链接</a>",
+            show : true,
+            url : 'http://www.baidu.com',
+            books : [
+                { name : '《Vue.js实战》'},
+                { name : '《JavaScript语言精粹》'},
+                { name : '《JavaScript高级程序设计》'}
+            ]
+        },
+        methods : {
+            handleClose : function () {
+                this.show = false;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

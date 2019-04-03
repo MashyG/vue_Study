@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生命周期</title>
+    <script>
+        /*  Vue的生命周期钩子（常用）
+        * 1. created：实例创建完成后调用，此阶段完成数据的观测等，但尚未挂载，$el 还不可用
+        *    需要初始化处理一些数据是会比较有用
+        * 2. mounted：el挂载到实例上后调用，一般我们的第一个业务逻辑会在这里开始
+        * 3. beforeDestroy：实例销毁之前调用。主要解绑一些使用addEventListener监听的事件等
+        */
+    </script>
+</head>
+<body>
+
+<div id="app">
+    <h1>SHOW IN CONSOLE —F12</h1>
+    时间:{{ time }}
+    <br/>
+    <!-- 输出HTML文本 -->
+    <span v-html="link"></span>
+    <br/>
+    <span v-pre>{{ 这里的内容不会被编译 }}</span>
+    <h2>{{ }} 除了简单的绑定属性值外，还可以使用js表达式进行简单的运算、三元运算等</h2>
+    <code>number / 10 = {{ number / 10 }}</code>
+    <br/>
+    <code>isOK ? true : false = {{ isOK ? true : false }}</code>
+    <br/>
+        <code>text.split(' ').reverse().join(',') = {{ text.split(' ').reverse().join(',') }}</code>
+    <br/>
+    <!--    注意
+    Vue.js只支持单个表达式，不支持语句和流控制，在表达式中不能使用用户自定义的全局变量，只能使用Vue白名单的全局变量
+    例如:
+        这是语句，不是表达式
+        {{ var book = 'Hello Word' }}
+        不能使用流控制，要使用三元运算
+        {{ if (OK) return msg }}
+    -->
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+    let app = new Vue({
+        el : '#app',
+        data : {
+            time : new Date(),
+            link : "<a href='#'>这是一个包含在span中的a链接</a>",
+            number : 100,
+            isOK : false,
+            text : 'Hello Word'
+        },
+            //  生命周期钩子
+        //创建完成之前
+        beforeCreate : function(){
+            console.log(this.number);   // undefined
+        },
+        //创建完成之后
+        created: function () {
+            //this指向的是调用它的Vue实例
+            console.log(this.number);    // 2 ( == app.number )
+        },
+        //挂载到实例上之前
+        beforeMount : function(){
+            console.log(this.$el);   // <div id="app"></div>, {{}}中的实例未挂载成功
+        },
+        //挂载到实例上之后
+        mounted: function () {
+            console.log(this.$el);  // <div id="app"></div>, {{}}中的实例挂载成功
+        }
+        // 实例销毁之前：beforeDestroy
+        // 实例销毁之后：destroy
+    });
+</script>
+
+</body>
+</html>

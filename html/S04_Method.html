@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>方法和事件</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script>
+        /*  修饰符:@绑定的事件后加 .
+        *
+        *   阻止单击事件冒泡：@click.stop
+        *   提交事件不再重载页面：@submit.prevent
+        *   修饰符可以串联：@click.stop.prevent
+        *   只有修饰符：@submit.prevent
+        *   添加事件侦听器时使用事件捕获模式：@click.capture
+        *   只当事件在该元素本身（而不是子元素）触发时触发回调：@click.self
+        *   只触发一次，组件同样适用：@click.once
+        *
+        */
+    </script>
+</head>
+<body>
+<div class="container" id="app">
+    点击次数：{{ counter }}
+    <a href="#" class="btn btn-success btn-sm" @click="counter++"> + 1</a>
+    <a href="#" class="btn btn-success btn-sm" @click="handleAdd()"> + 1</a>
+    <a href="#" class="btn btn-success btn-sm" @click="handleAdd(10)"> + 10</a>
+</div>
+
+<script>
+    let app = new Vue({
+        el : '#app',
+        data : {
+            counter : 0
+        },
+        methods : {
+            handleAdd : function (count){
+                count = count || 1;
+                this.counter += count;
+            }
+        }
+    });
+</script>
+</body>
+</html>

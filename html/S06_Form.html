@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单与v-modal</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container" v-cloak>
+    <h3>输入框</h3>
+    <input type="text" v-model="message" placeholder="input..." />
+    <input type="text" @input="handleInput" placeholder="input..." />
+    <p>input：{{ message }}</p>
+    <br/>
+    <!-- 单选按钮 直接使用v-bind绑定一个布尔类型的值 -->
+    <h3>单选按钮</h3>
+    <input type="radio" :checked="pick" />
+    <label>单选按钮</label>
+    <br/>
+    <!-- 多个单选按钮 实现互斥效果：v-model需要配合value来使用 -->
+    <input type="radio" v-model="picked" value="html" id="html" />
+    <label for="html">HTML</label>
+    <input type="radio" v-model="picked" value="js" id="js" />
+    <label for="js">JavaScript</label>
+    <input type="radio" v-model="picked" value="css" id="css" />
+    <label for="css">CSS</label>
+    <br/>
+    <p>Your choice：{{ picked }}</p>
+    <br/>
+    <!-- 复选框 -->
+    <h3>复选框</h3>
+    <input type="checkbox" v-model="check" id="check"  />
+    <label for="check">Your choice's state:{{check}}</label>
+    <br/>
+    <input type="checkbox" v-model="checked" value="html" id="html" />
+    <label for="html">HTML</label>
+    <input type="checkbox" v-model="checked" value="js" id="js" />
+    <label for="js">JavaScript</label>
+    <input type="checkbox" v-model="checked" value="css" id="css" />
+    <label for="css">CSS</label>
+    <br/>
+    <p>Your choice:{{ checked }}</p>
+    <br/>
+    <!-- 选择列表（下拉选择器） multiple多选 -->
+    <h3>选择列表（下拉选择器）</h3>
+    <!--<select v-model="selected" multiple>-->
+        <!--<option>html</option>-->
+        <!--<option value="javascript">javascript</option>-->
+        <!--<option>css</option>-->
+        <!--<option v-for="option in options"  :value="option.value">{{ option.text}}</option>-->
+    <!--</select>-->
+    <!--<p>Your choice:{{ selected }}</p>-->
+    <br/>
+    <select v-model="selected">
+        <option v-for="option in options"  :value="option.value">{{ option.text}}</option>
+    </select>
+    <p>Your choice:{{ selected }}</p>
+    <br/>
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+    let app = new Vue({
+        el : '.container',
+        data : {
+            message : 123,
+            pick : true,
+            picked : 'html',
+            check : true,
+            checked : ['html','css'],
+            selected : 'html',
+            options : [
+                {
+                    text : 'HTML',
+                    value : 'html'
+                },
+                {
+                    text : 'JavaScript',
+                    value : 'js'
+                },
+                {
+                    text : 'CSS',
+                    value : 'css'
+                }
+            ]
+        },
+        methods : {
+            handleInput(e){
+                this.message = e.target.value;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

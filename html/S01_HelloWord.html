@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Word</title>
+</head>
+<body>
+
+<div id="app">
+    <h1> Hello Word, {{ name }} </h1>
+    <!-- {{ name }} 文本插值方法，自动将双向绑定的数据实时显示出来 -->
+    input <input type="text" v-model="name" placeholder="yourName">
+    <!-- v-modal指令对应 Vue 实例的 data 选项中的 name 字段 -->
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+    //通过构造函数Vue创建实例，并启动Vue应用
+    let app = new Vue({
+        // el : 必不可少，指定一个页面中已存在的DOM元素来挂载实例，可以是 HTMLElement，或者 CSS选择器
+        el : '#app',    // 或者 document.getElementById('app');
+        //显性声明数据（可以指向一个已有的变量）
+        data : {
+            name : '',
+            book : '书名'
+        }
+    });
+    console.log(app.book);
+</script>
+
+</body>
+</html>
